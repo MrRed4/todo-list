@@ -1,11 +1,11 @@
 * {
     margin: 0;
+    font-family: sans-serif;
 }
 
 nav {
     position: relative;
     top: 0;
-    padding: 8px;
     display: flex;
     gap: 8px;
 }
@@ -15,27 +15,91 @@ nav {
     gap: 8px;
 }
 
+.new-project {
+    border-bottom: 4px solid green;
+    font-weight: bold;
+}
+
+nav > button, nav > #projects > button {
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 0 0 4px 4px;
+}
+
 .active {
-    transform: scale(1.1)
+    transform: scale(1.1);
 }
 
 .project-description {
     padding: 32px;
     font-style: italic;
-    color: gray;
+    color: rgb(100, 100, 100);
+}
+
+.new-todo {
+    border: 2px dashed lightgray;
+    background: none;
+    padding: 4px 12px 4px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#container {
+    padding: 8px;
 }
 
 .todo-items {
     display: flex;
+    gap: 8px;
+    padding-top: 8px;
 }
 
 .card {
     border: 1px solid lightgray;
-    border-radius: 4px;
-    padding: 8px;
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 180px;
+    width: 150px;
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
     gap: 8px;
+}
+
+.card > div > button {
+    background: none;
+    border: none;
+    color: lightgray;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.card > div > h3 {
+    word-break: break-all;
+}
+
+.card > p {
+    flex: 1;
+    margin-top: 4px;
+    word-break: break-all;
+}
+
+.task-info {
+    color: rgb(150, 150, 150);
+    font-size: 12px;
+}
+
+.Low {
+    border-bottom: 8px solid green;
+}
+
+.Moderate {
+    border-bottom: 8px solid yellow;
+}
+
+.High {
+    border-bottom: 8px solid red;
 }
 
 .card > div {
@@ -49,9 +113,10 @@ dialog {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 12px;
-    border: 1px solid black;
+    border: 1px solid gray;
     width: 600px;
     height: 500px;
+    border-top: 50px solid rgb(150, 150, 150, 0.5);
 }
 
 form {

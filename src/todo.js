@@ -1,12 +1,26 @@
 class Task { 
     constructor(title, desc, dueDate, prio, creationDate) {
-        this.title = title
+        if (!title) {
+            this.title = 'Unnamed Task'
+        } else {
+            this.title = title
+        }
         this.desc = desc
         this.dueDate = dueDate
         this.prio = prio
         this.creationDate = creationDate
     }
-    
+
+    get prioLabel() {
+        if (this.prio <= 0) {
+            return 'Low'
+        } else if (this.prio >= 3) {
+            return 'High'
+        } else {
+            return 'Moderate'
+        }
+    }
+
     increasePrio() {
         if (this.prio < 3) {
             this.prio = this.prio + 1
@@ -20,16 +34,6 @@ class Task {
             this.prio = this.prio - 1
         } else {
             console.log('Prio cannot be lower than 1')
-        }
-    }
-
-    calculatePrio() {
-        if (this.prio <= 0) {
-            return 'Low'
-        } else if (this.prio >= 3) {
-            return 'High'
-        } else {
-            return 'Moderate'
         }
     }
 }

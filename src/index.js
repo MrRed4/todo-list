@@ -42,16 +42,18 @@ confirmNewTodo.addEventListener('click', submitTask)
 function submitProject() {
     const projectName = document.querySelector('#new-project-name')
     const projectDescription = document.querySelector('#new-project-description')
+    const projectColour = document.querySelector('#new-project-colour')
 
-    createProject(projectName.value, projectDescription.value)
+    createProject(projectName.value, projectDescription.value, projectColour.value)
     renderProjects()
 
     projectName.value = ''
     projectDescription.value = ''
+    projectColour.value = '#000000'
 }
 
-function createProject(name, desc) {
-    let newProject = new Project(name, desc)
+function createProject(name, desc, colour) {
+    let newProject = new Project(name, desc, colour)
     ProjectList.addProject(newProject)
 }
 
@@ -80,7 +82,7 @@ function createTask(title, desc, dueDate, prio, date) {
 }
 
 function createDefault() {
-    const defaultProject = new Project('Default Project', 'A simple description for your project.')
+    const defaultProject = new Project('Default Project', 'A simple description for your project', '#f5b942')
     const defaultTodo = new Task('First Task', 'Default todo list item', new Date().toLocaleDateString("en-AU"), 0, new Date().toLocaleDateString("en-AU"))
     defaultProject.addTodo(defaultTodo)
     defaultProject.isActive = true;
@@ -96,7 +98,8 @@ function renderProjects() {
         const tab = document.createElement('button')
         tab.addEventListener('click', changeActiveProject)
         tab.classList = index
-        tab.textContent = `${project.title} [${project.taskNo()}]`
+        tab.textContent = `${project.title} [${project.numberOfTasks}]`
+        tab.style = `border-bottom: 4px solid ${project.colour}`
         projectBar.appendChild(tab)
 
         if (project.isActive) {
@@ -127,9 +130,11 @@ function renderTodoItems() {
                 title.textContent = `${task.title}`
                 description.textContent = `${task.desc}`
                 dueDate.textContent = `${task.dueDate}`
-                priority.textContent = `${task.calculatePrio()}`
+                priority.textContent = `${task.prioLabel}`
 
-                card.classList = `task-number${index} card`
+                card.classList = `card ${index} ${task.prioLabel}`
+                x.classList = `${index}`
+                botDiv.classList = 'task-info'
                 
                 container.appendChild(card)
                 card.appendChild(topDiv)
@@ -139,6 +144,8 @@ function renderTodoItems() {
                 card.appendChild(botDiv)
                 botDiv.appendChild(priority)
                 botDiv.appendChild(dueDate)
+
+                x.addEventListener('click', removeTask)
             })
         }
     })
@@ -150,6 +157,15 @@ function changeActiveProject(e) {
         project.isActive = false
     })
     ProjectList.getProjects()[e.target.classList[0]].toggleActive()
+    render()
+}
+
+function removeTask(e) {
+    ProjectList.getProjects().forEach((project) => {
+        if (project.isActive) {
+            project.removeTodo(e.target.classList.value)
+        }
+    })
     render()
 }
 
