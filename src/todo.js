@@ -7,18 +7,14 @@ class Task {
         }
         this.desc = desc
         this.dueDate = dueDate
-        this.prio = prio
-        this.creationDate = creationDate
-    }
-
-    get prioLabel() {
-        if (this.prio <= 0) {
-            return 'Low'
-        } else if (this.prio >= 3) {
-            return 'High'
+        if (prio <= 0) {
+            this.prio = 'Low'
+        } else if (prio >= 3) {
+            this.prio = 'High'
         } else {
-            return 'Moderate'
+            this.prio = 'Moderate'
         }
+        this.creationDate = creationDate
     }
 
     increasePrio() {

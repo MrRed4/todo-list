@@ -53,6 +53,7 @@ nav > button, nav > #projects > button {
     display: flex;
     gap: 8px;
     padding-top: 8px;
+    flex-wrap: wrap;
 }
 
 .card {

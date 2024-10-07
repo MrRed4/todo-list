@@ -1,10 +1,19 @@
 import Task from "./todo.js"
-import Project from "./project.js"
+import { Project, ProjectAfterJSON } from "./project.js"
 import "./styles.css"
 
 const ProjectList = (() => {
 
     const projects = [];
+
+    function updateList() {
+        const storage = JSON.parse(getStorage())
+        for (let key in storage) {
+            const obj = JSON.parse(storage[key])
+            let newObj = new ProjectAfterJSON(obj)
+            projects.push(newObj)
+        }
+    }
 
     function removeProject(index) {
         projects.splice(index, 1)
@@ -22,7 +31,7 @@ const ProjectList = (() => {
 
     const numberOfTasks = (project) => projects[project].taskNo()
 
-    return { addProject, getProjects, removeProject, addTodo, numberOfTasks }
+    return { addProject, getProjects, removeProject, addTodo, numberOfTasks, updateList }
 })()
 
 createDefault()
@@ -54,9 +63,19 @@ function submitProject() {
 
 function createProject(name, desc, colour) {
     let newProject = new Project(name, desc, colour)
+    let clear = true
+    ProjectList.getProjects().forEach((project) => {
+        if (newProject.title.toLowerCase() == project.title.toLowerCase()) {
+            clear = false
+        }
+    })
+    if (!clear) {
+        alert(`Project titled '${newProject.title}' already exists`)
+        return
+    }
+    populateStorage(newProject)
     ProjectList.addProject(newProject)
 }
-
 
 function submitTask() {
     const taskName = document.querySelector('#new-task-name')
@@ -65,11 +84,11 @@ function submitTask() {
     const taskPrio = document.querySelector('#new-task-priority')
 
     createTask(taskName.value, taskDescription.value, taskDueDate.value, taskPrio.value, new Date().toLocaleDateString("en-AU"))
+    renderTodoItems()
 
     taskName.value = ''
     taskDescription.value = ''
     taskDueDate.value = ''
-    renderTodoItems()
 }
 
 function createTask(title, desc, dueDate, prio, date) {
@@ -86,7 +105,7 @@ function createDefault() {
     const defaultTodo = new Task('First Task', 'Default todo list item', new Date().toLocaleDateString("en-AU"), 0, new Date().toLocaleDateString("en-AU"))
     defaultProject.addTodo(defaultTodo)
     defaultProject.isActive = true;
-    ProjectList.addProject(defaultProject)
+    populateStorage(defaultProject)
 }
 
 function renderProjects() {
@@ -106,7 +125,6 @@ function renderProjects() {
             projectDesc.textContent = project.desc
             tab.classList.add('active')
         } 
-
     })
 }
 
@@ -130,9 +148,9 @@ function renderTodoItems() {
                 title.textContent = `${task.title}`
                 description.textContent = `${task.desc}`
                 dueDate.textContent = `${task.dueDate}`
-                priority.textContent = `${task.prioLabel}`
+                priority.textContent = `${task.prio}`
 
-                card.classList = `card ${index} ${task.prioLabel}`
+                card.classList = `card ${index} ${task.prio}`
                 x.classList = `${index}`
                 botDiv.classList = 'task-info'
                 
@@ -173,5 +191,15 @@ function render() {
     renderTodoItems()
     renderProjects()
 }
+
+function populateStorage(project) {
+    localStorage.setItem(`${project.title}`, JSON.stringify(project))
+}
+
+function getStorage() {
+    return JSON.stringify(localStorage)
+}
+
+ProjectList.updateList()
 
 render()
