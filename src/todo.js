@@ -21,7 +21,7 @@ class Task {
         if (this.prio < 3) {
             this.prio = this.prio + 1
         } else {
-            console.log('Prio cannot be higher than 3')
+            alert('Prio cannot be higher than 3')
         }
     }
 
@@ -29,7 +29,7 @@ class Task {
         if (this.prio > 1) {
             this.prio = this.prio - 1
         } else {
-            console.log('Prio cannot be lower than 1')
+            alert('Prio cannot be lower than 1')
         }
     }
 }

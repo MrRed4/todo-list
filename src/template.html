@@ -19,6 +19,7 @@
     </div>
 
     <dialog id="project-dialog">
+        <div class="block"></div>
         <h1>Add New Project</h1>
         <form method="dialog" id="project-form">
             <div>
@@ -27,13 +28,13 @@
             </div>
             <div>
                 <label>Project Description:</label><br>
-                <input type="text" id="new-project-description">
+                <textarea id="new-project-description" cols="50" rows="5"></textarea>
             </div>
             <div>
                 <label>Colour: </label>
                 <input type="color" id="new-project-colour">
             </div>
-            <div>
+            <div class="dialog-buttons">
                 <button id="cancel-button">Cancel</button>
                 <button id="confirmProjectBtn">Confirm</button>
             </div>
@@ -41,6 +42,7 @@
     </dialog>
 
     <dialog id="todo-dialog">
+        <div class="block"></div>
         <h1>Add New To-Do Item</h1>
         <form method="dialog" id="task-form">
             <div>
@@ -49,7 +51,7 @@
             </div>
             <div>
                 <label>Task Description:</label><br>
-                <input type="text" id="new-task-description">
+                <textarea id="new-task-description"></textarea>
             </div>
             <div>
                 <label>Task Due Date:</label><br>
@@ -59,7 +61,7 @@
                 <label>Task Priority</label><br>
                 <input type="range" id="new-task-priority" min="1" max="3" value="1">
             </div>
-            <div>
+            <div class="dialog-buttons">
                 <button id="cancel-button">Cancel</button>
                 <button id="confirmTodoBtn">Confirm</button>
             </div>

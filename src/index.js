@@ -34,8 +34,6 @@ const ProjectList = (() => {
     return { addProject, getProjects, removeProject, addTodo, numberOfTasks, updateList }
 })()
 
-createDefault()
-
 const newProjectBtn = document.querySelector('.new-project')
 const newTodoBtn = document.querySelector('.new-todo')
 const confirmNewProject = document.querySelector('#confirmProjectBtn')
@@ -147,8 +145,8 @@ function renderTodoItems() {
                 x.textContent = 'X'
                 title.textContent = `${task.title}`
                 description.textContent = `${task.desc}`
-                dueDate.textContent = `${task.dueDate}`
-                priority.textContent = `${task.prio}`
+                dueDate.textContent = `Due: ${task.dueDate}`
+                priority.textContent = `Priority: ${task.prio}`
 
                 card.classList = `card ${index} ${task.prio}`
                 x.classList = `${index}`
@@ -200,6 +198,6 @@ function getStorage() {
     return JSON.stringify(localStorage)
 }
 
+createDefault()
 ProjectList.updateList()
-
 render()
